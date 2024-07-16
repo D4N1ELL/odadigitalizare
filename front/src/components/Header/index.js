@@ -1,4 +1,3 @@
-import SearchBar from "../SearchBar";
 import * as S from "./styles";
 
 

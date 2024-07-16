@@ -15,4 +15,17 @@ export const Results = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1px;
+  .clearButtonStyle{
+    align-self: flex-end;
+    padding: 10px 20px;
+    border-radius: 25px;
+    border: 1px solid #0073e6;
+    background-color: #0073e6;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    margin: 22px 0;
+  }
 `;

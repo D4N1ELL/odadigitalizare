@@ -23,10 +23,11 @@ export const person = {
   final_statut: NaN,
   exclusion: NaN,
   notice: {
-    phone_call: [true, true, true],
-    email_call: [false, false, false],
-    sms_call: [false, false, false],
-    viber_call: [false, false],
-    response: ["Confirm", "Confirm", "Confirm"],
+    "phone_call": ["01/03/1995", NaN, NaN],
+    "email_call": [NaN, "01/04/1995", NaN],
+    "sms_call": [NaN, NaN, "01/05/1995"],
+    "viber_call": [NaN, NaN, "01/06/1995"],
+    "response": ["Confirm", "Confirm", "Confirm"]
+
   },
 };

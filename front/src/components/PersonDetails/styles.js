@@ -41,4 +41,21 @@ export const PersonDetails = styled.div`
     justify-content: space-between;
     align-items: center;
   }
+  .noticeTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+
+  .noticeTable th,
+  .noticeTable td {
+    border: 1px solid #0073e6;
+    padding: 8px;
+    text-align: center;
+  }
+
+  .noticeTable th {
+    background-color: #0073e6;
+    color: white;
+  }
 `;

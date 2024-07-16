@@ -33,34 +33,68 @@ const Main = () => {
       final_statut: "NaN",
       exclusion: "NaN",
       notice: {
-        phone_call: [true, true, true],
-        email_call: [false, false, false],
-        sms_call: [false, false, false],
-        viber_call: [false, false],
-        response: ["Confirm", "Confirm", "Confirm"],
+        "phone_call": ["01/03/1995", NaN, NaN],
+        "email_call": [NaN, "01/04/1995", NaN],
+        "sms_call": [NaN, NaN, "01/05/1995"],
+        "viber_call": [NaN, NaN, "01/06/1995"],
+        "response": ["Confirm", "Confirm", "Confirm"]
+
       },
     };
     setSearchResult(result);
   };
+
+  const handleClear = () => {
+    setSearchResult(null);
+  };
+
   return (
     <S.Main>
-      <div styles={AppStyle}>
+      <div >
         <SearchForm onSubmit={handleSearch} />
         <S.Results>
-          {searchResult && <PersonDetails person={searchResult} />}
-          {searchResult && <PersonDetails person={searchResult} />}
+        {searchResult && (
+          <div >
+            <button onClick={handleClear} className="clearButtonStyle">Clear</button>
+            <PersonDetails person={searchResult} />
+            <PersonDetails person={searchResult} />
+          </div>
+        )}
+
         </S.Results>
       </div>
     </S.Main>
   );
 };
 
-const AppStyle = {
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  gap: "2em",
-  padding: "2em",
-};
+// const AppStyle = {
+//   display: "flex",
+//   flexDirection: "column",
+//   alignItems: "center",
+//   gap: "2em",
+//   padding: "2em",
+// };
+
+// const resultsContainerStyle = {
+//   display: "flex",
+//   flexDirection: "column",
+//   alignItems: "center",
+//   gap: "1em",
+//   width: "100%",
+// };
+
+// const clearButtonStyle = {
+//   alignSelf: "flex-end",
+//   padding: "10px 20px",
+//   borderRadius: "25px",
+//   border: "1px solid #0073e6",
+//   backgroundColor: "#0073e6",
+//   color: "#fff",
+//   fontSize: "16px",
+//   fontWeight: "bold",
+//   cursor: "pointer",
+//   transition: "background-color 0.3s, box-shadow 0.3s",
+//   margin: "22px 0"
+// };
 
 export default Main;
