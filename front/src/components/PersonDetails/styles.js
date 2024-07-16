@@ -59,3 +59,35 @@ export const PersonDetails = styled.div`
     color: white;
   }
 `;
+
+export const Summary = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #e0e7ff;
+  border-radius: 10px;
+
+  .info {
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+
+    .info-item {
+      padding: 5px 10px;
+      background-color: #d1e7ff;
+      border-radius: 5px;
+      font-weight: bold;
+      color: #000000;
+    }
+  }
+`;
+
+export const Arrow = styled.div`
+  margin-left: 16px;
+  cursor: pointer;
+  font-size: 24px;
+  color: #0073e6;
+`;

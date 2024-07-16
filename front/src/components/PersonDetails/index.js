@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { person } from "./exemplu";
 import * as S from "./styles";
+import {  Summary, Arrow } from "./styles"; // Ensure the correct path
+
 
 const PersonDetails = () => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -11,16 +13,18 @@ const PersonDetails = () => {
 
   return (
     <S.PersonDetails>
-      <div className="summaryStyle">
-        <div>{person.username}</div>
-        <div>{person.surname}</div>
-        <div>{person.idnp}</div>
-        <div>{person.phone_number}</div>
-        <div>{person.email}</div>
-        <div className="arrowStyle" onClick={toggleExpand}>
-          {isExpanded ? "▲" : "▼"}
+     <Summary>
+        <div className="info">
+          <div className="info-item">{person.username}</div>
+          <div className="info-item">{person.surname}</div>
+          <div className="info-item">{person.idnp}</div>
+          <div className="info-item">{person.phone_number}</div>
+          <div className="info-item">{person.email}</div>
         </div>
-      </div>
+        <Arrow onClick={toggleExpand}>
+          {isExpanded ? "▲" : "▼"}
+        </Arrow>
+      </Summary>
       {isExpanded && (
         <div className="detailsStyle">
           <div><b>Data aplicării:</b> {person.application_date.join(", ")}</div>
