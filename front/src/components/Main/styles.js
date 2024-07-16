@@ -8,6 +8,22 @@ export const Main = styled.div`
     margin: 0 auto 0;
     padding-top: 72px;
   }
+  .noResultsStyle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #0073e6;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 20px;
+    padding: 10px 20px;
+    border-radius: 15px;
+    border: 1px solid #0073e6;
+    background-color: #f0f4ff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    text-align: center;
+  }
 `;
 
 export const Results = styled.div`
