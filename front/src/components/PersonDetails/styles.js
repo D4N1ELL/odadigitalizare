@@ -89,5 +89,4 @@ export const Arrow = styled.div`
   margin-left: 16px;
   cursor: pointer;
   font-size: 24px;
-  color: #0073e6;
 `;
