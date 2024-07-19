@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { cities } from "./orase"; // Ensure you have this file with the list of cities
+import { programs } from "./programs"; // Ensure you have this file with the list of programs
+import { trainingGroups } from "./trainingGroups"; // Ensure you have this file with the list of training groups
 
 const SearchForm = ({ onSubmit }) => {
   const [formValues, setFormValues] = useState({
@@ -9,6 +11,8 @@ const SearchForm = ({ onSubmit }) => {
     email: "",
     phoneNumber: "",
     city: "",
+    program: "",
+    trainingGroup: "",
   });
 
   const handleChange = (e) => {
@@ -27,13 +31,15 @@ const SearchForm = ({ onSubmit }) => {
       email: "",
       phoneNumber: "",
       city: "",
+      program: "",
+      trainingGroup: "",
     });
   };
 
   return (
     <form onSubmit={handleSubmit} style={formStyle}>
       <div style={inputGroupStyle}>
-        <label style={labelStyle}>Nume</label>
+        <label style={labelStyle}>Prenume</label>
         <input
           type="text"
           name="name"
@@ -44,7 +50,7 @@ const SearchForm = ({ onSubmit }) => {
         />
       </div>
       <div style={inputGroupStyle}>
-        <label style={labelStyle}>Nume de familie</label>
+        <label style={labelStyle}>Nume</label>
         <input
           type="text"
           name="surname"
@@ -108,6 +114,56 @@ const SearchForm = ({ onSubmit }) => {
           {cities.map((city, index) => (
             <option key={index} value={city} style={optionStyle}>
               {city}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div style={inputGroupStyle}>
+        <label style={labelStyle}>Tipul de program</label>
+        <select
+          name="program"
+          value={formValues.program}
+          onChange={handleChange}
+          style={{
+            ...inputStyle,
+            color: `${formValues.program === "" ? "#757575" : "#212121"}`,
+          }}
+        >
+          <option
+            value=""
+            style={{ ...optionStyle, color: "#ccc", fontWeight: "300" }}
+            disabled
+          >
+            Alege program
+          </option>
+          {programs.map((program, index) => (
+            <option key={index} value={program} style={optionStyle}>
+              {program}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div style={inputGroupStyle}>
+        <label style={labelStyle}>Grupa de instruire</label>
+        <select
+          name="trainingGroup"
+          value={formValues.trainingGroup}
+          onChange={handleChange}
+          style={{
+            ...inputStyle,
+            color: `${formValues.trainingGroup === "" ? "#757575" : "#212121"}`,
+          }}
+        >
+          <option
+            value=""
+            style={{ ...optionStyle, color: "#ccc", fontWeight: "300" }}
+            disabled
+          >
+            Alege grupa de instruire
+          </option>
+          {trainingGroups.map((group, index) => (
+            <option key={index} value={group} style={optionStyle}>
+              {group}
             </option>
           ))}
         </select>

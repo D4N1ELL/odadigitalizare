@@ -6,7 +6,6 @@ const Header = () => {
     <S.Header>
       <img src="/images/oda-logo.jpg" className="logo" />
       
-      <img src='/images/add-user.png' className="add"/>
     </S.Header>
   );
 };
