@@ -33,7 +33,7 @@ const SearchForm = ({ onSubmit }) => {
   return (
     <form onSubmit={handleSubmit} style={formStyle}>
       <div style={inputGroupStyle}>
-        <label style={labelStyle}>Nume</label>
+        <label style={labelStyle}>Prenume</label>
         <input
           type="text"
           name="name"
@@ -44,7 +44,7 @@ const SearchForm = ({ onSubmit }) => {
         />
       </div>
       <div style={inputGroupStyle}>
-        <label style={labelStyle}>Nume de familie</label>
+        <label style={labelStyle}>Nume</label>
         <input
           type="text"
           name="surname"

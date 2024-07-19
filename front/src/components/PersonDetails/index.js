@@ -9,15 +9,20 @@ const PersonDetails = ({ person }) => {
     setIsExpanded(!isExpanded);
   };
 
+  // Safely access user_data and other fields
+  const userData = person.user_data || person;
+  const applicationDates = person.application_dates || [];
+  const instructionGroups = person.instruction_groups || [];
+  const notices = person.notices || [];
+
   return (
     <S.PersonDetails>
-     <Summary>
+      <Summary>
         <div className="info">
-          <div className="info-item">{person.user_data.username}</div>
-          <div className="info-item">{person.user_data.surname}</div>
-          <div className="info-item">{person.user_data.idnp}</div>
-          <div className="info-item">{person.user_data.phone_number}</div>
-          <div className="info-item">{person.user_data.email}</div>
+          <div className="info-item">{userData.username || "N/A"}</div>
+          <div className="info-item">{userData.idnp || "N/A"}</div>
+          <div className="info-item">{userData.phone_number || "N/A"}</div>
+          <div className="info-item">{userData.email || "N/A"}</div>
         </div>
         <Arrow onClick={toggleExpand}>
           {isExpanded ? "▲" : "▼"}
@@ -25,32 +30,32 @@ const PersonDetails = ({ person }) => {
       </Summary>
       {isExpanded && (
         <div className="detailsStyle">
-          <div><b>Data aplicării:</b> {person.application_dates.join(", ")}</div>
-          <div><b>Data nașterii: </b>{person.user_data.bday}</div>
-          <div><b>Vârsta:</b> {person.user_data.age}</div>
-          <div><b>Localitate:</b> {person.user_data.location}</div>
-          <div><b>Programul la care aplică:</b> {person.user_data.program}</div>
-          <div><b>Persoana la care a apelat:</b> {person.user_data.operator}</div>
+          <div><b>Data aplicării:</b> {applicationDates.join(", ")}</div>
+          <div><b>Data nașterii: </b>{userData.bday || "N/A"}</div>
+          <div><b>Vârsta:</b> {userData.age || "N/A"}</div>
+          <div><b>Localitate:</b> {userData.location || "N/A"}</div>
+          <div><b>Programul la care aplică:</b> {userData.program || "N/A"}</div>
+          <div><b>Persoana la care a apelat:</b> {userData.operator || "N/A"}</div>
           <div>
             <b>Data confirmării recepționării formularului:</b>{" "}
-            {person.user_data.confirmation_date}
+            {userData.confirmation_date || "N/A"}
           </div>
-          <div><b>Comentariu în urma discuției:</b> {person.user_data.comment}</div>
-          <div><b>Statut în urma dicuției:</b> {person.user_data.status}</div>
+          <div><b>Comentariu în urma discuției:</b> {userData.comment || "N/A"}</div>
+          <div><b>Statut în urma dicuției:</b> {userData.status || "N/A"}</div>
           <div>
             <b>Grupa de instruire în care a fost invitat:</b>{" "}
-            {person.instruction_groups.join(", ")}
+            {instructionGroups.join(", ") || "N/A"}
           </div>
-          <div><b>Certificat obținut: </b>{person.user_data.certificate}</div>
-          <div><b>Aplicat la finanțare:</b> {person.user_data.finance}</div>
+          <div><b>Certificat obținut: </b>{userData.certificate || "N/A"}</div>
+          <div><b>Aplicat la finanțare:</b> {userData.finance || "N/A"}</div>
           <div>
             <b>Statut în urma evaluării planului de afaceri:</b>{" "}
-            {person.user_data.final_status || "N/A"}
+            {userData.final_status || "N/A"}
           </div>
-          <div><b>Excluderea din baza de date: </b>{person.user_data.exclusion || "N/A"}</div>
+          <div><b>Excluderea din baza de date: </b>{userData.exclusion || "N/A"}</div>
           <div className="phoneStyle">
           <b>Informarea prin poștei electronice:</b>
-            {person.notices ? (
+            {notices.length > 0 ? (
               <table className="noticeTable">
                 <thead>
                   <tr>
@@ -63,14 +68,14 @@ const PersonDetails = ({ person }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {person.notices.map((notice, index) => (
+                  {notices.map((notice, index) => (
                     <tr key={index}>
                       <td>{index + 1}</td>
                       <td>{notice[0] || "N/A"}</td>
                       <td>{notice[1] || "N/A"}</td>
                       <td>{notice[2] || "N/A"}</td>
                       <td>{notice[3] || "N/A"}</td>
-                      <td>{notice[4]}</td>
+                      <td>{notice[4] || "N/A"}</td>
                     </tr>
                   ))}
                 </tbody>

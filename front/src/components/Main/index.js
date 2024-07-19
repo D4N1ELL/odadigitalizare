@@ -5,7 +5,7 @@ import PersonDetails from "../PersonDetails";
 import axios from "axios";
 
 const Main = () => {
-  const [searchResult, setSearchResult] = useState(null);
+  const [searchResult, setSearchResult] = useState([]);
   const [noResults, setNoResults] = useState(false);
   const [formValues, setFormValues] = useState(null);
 
@@ -16,17 +16,21 @@ const Main = () => {
     try {
       const response = await axios.post('http://127.0.0.1:5000/search', formValues);
       console.log("Search Result:", response.data); // Log the result
-      setSearchResult(response.data);
-      setNoResults(false);
+
+      // Normalize the response to always be an array
+      const normalizedResult = Array.isArray(response.data) ? response.data : [response.data];
+
+      setSearchResult(normalizedResult);
+      setNoResults(normalizedResult.length === 0);
     } catch (error) {
       console.error("There was an error!", error);
-      setSearchResult(null);
+      setSearchResult([]);
       setNoResults(true);
     }
   };
 
   const handleClear = () => {
-    setSearchResult(null);
+    setSearchResult([]);
     setNoResults(false);
     setFormValues(null);
   };
@@ -37,12 +41,14 @@ const Main = () => {
         <SearchForm onSubmit={handleSearch} />
         <S.Results>
           {noResults && <div className="noResultsStyle">Nu s-a găsit nimic</div>}
-          {searchResult && (
+          {searchResult.length > 0 && (
             <div>
               <button onClick={handleClear} className="clearButtonStyle">
                 Clear
               </button>
-              <PersonDetails person={searchResult} />
+              {searchResult.map((person, index) => (
+                <PersonDetails key={index} person={person} />
+              ))}
             </div>
           )}
         </S.Results>
