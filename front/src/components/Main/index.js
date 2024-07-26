@@ -7,20 +7,16 @@ import axios from "axios";
 const Main = () => {
   const [searchResult, setSearchResult] = useState([]);
   const [noResults, setNoResults] = useState(false);
-  const [formValues, setFormValues] = useState(null);
 
   const handleSearch = async (formValues) => {
     console.log("Form Values:", formValues);
-    setFormValues(formValues); // Save form values to state variable
 
     try {
       const response = await axios.post('http://127.0.0.1:5000/search', formValues);
       console.log("Search Result:", response.data); // Log the result
 
-      let normalizedResult = response.data;
-      if (!Array.isArray(normalizedResult)) {
-        normalizedResult = [normalizedResult];
-      }
+      // Normalize the response to always be an array
+      const normalizedResult = Array.isArray(response.data) ? response.data : [response.data];
 
       setSearchResult(normalizedResult);
       setNoResults(normalizedResult.length === 0);
@@ -34,7 +30,6 @@ const Main = () => {
   const handleClear = () => {
     setSearchResult([]);
     setNoResults(false);
-    setFormValues(null);
   };
 
   return (

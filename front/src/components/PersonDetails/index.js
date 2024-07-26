@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyledPersonDetails, ButtonContainer, Summary, Arrow, Input } from './styles';
 import axios from "axios";
 
@@ -7,14 +7,15 @@ const PersonDetails = ({ person = {} }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedPerson, setEditedPerson] = useState({ ...person });
 
+  useEffect(() => {
+    setEditedPerson({ ...person });
+  }, [person]);
+
   const toggleExpand = () => {
     setIsExpanded(!isExpanded);
   };
 
   const toggleEdit = () => {
-    if (!isEditing) {
-      setEditedPerson({ ...person });
-    }
     setIsEditing(!isEditing);
   };
 
@@ -28,11 +29,9 @@ const PersonDetails = ({ person = {} }) => {
 
   const handleSave = async () => {
     try {
-      // Send the updated data to the backend
       const response = await axios.post('http://127.0.0.1:5000/update', editedPerson);
 
       if (response.data.success) {
-        // Update the state with the new data
         setIsEditing(false);
       } else {
         console.error('Error saving changes');
@@ -42,8 +41,7 @@ const PersonDetails = ({ person = {} }) => {
     }
   };
 
-  // Safely access user_data and other fields
-  const userData = editedPerson.user_data || {};
+  const userData = editedPerson.user_data || editedPerson;
   const applicationDates = editedPerson.application_dates || [];
   const instructionGroups = editedPerson.instruction_groups || [];
   const notices = editedPerson.notices || [];
@@ -76,7 +74,7 @@ const PersonDetails = ({ person = {} }) => {
           <div><b>Certificat obținut: </b>{isEditing ? <Input type="text" name="certificate" value={userData.certificate || ''} onChange={handleChange} /> : userData.certificate || 'N/A'}</div>
           <div><b>Aplicat la finanțare:</b> {isEditing ? <Input type="text" name="finance" value={userData.finance || ''} onChange={handleChange} /> : userData.finance || 'N/A'}</div>
           <div><b>Statut în urma evaluării planului de afaceri:</b> {isEditing ? <Input type="text" name="final_status" value={userData.final_status || ''} onChange={handleChange} /> : userData.final_status || 'N/A'}</div>
-          <div><b>Excluderea din baza de date: </b>{isEditing ? <Input type="text" name="exclusion" value={userData.exclusion || ''} onChange={handleChange} /> : (userData.exclusion === 1 ? 'Excludat' : 'N/A')}</div>
+          <div><b>Excluderea din baza de date: </b>{isEditing ? <Input type="text" name="exclusion" value={userData.exclusion || ''} onChange={handleChange} /> : (userData.exclusion === 1 ? 'Exclus' : 'N/A')}</div>
           <div className="phoneStyle">
             <b>Informarea prin poșta electronice:</b>
             {notices.length > 0 ? (
