@@ -1,4 +1,4 @@
-export const cities = [
+export const location = [
     "or. Ialoveni",
     "Chișinău",
     "Bălți",

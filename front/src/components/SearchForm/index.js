@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { cities } from "./orase"; // Ensure you have this file with the list of cities
+import { location } from "./orase";
+import { program } from "./programs";
+import { instruction_group } from "./instructionGroups";
 
 const SearchForm = ({ onSubmit }) => {
   const [formValues, setFormValues] = useState({
@@ -9,6 +11,8 @@ const SearchForm = ({ onSubmit }) => {
     email: "",
     phoneNumber: "",
     city: "",
+    program: "",
+    instructionGroup: "",
   });
 
   const handleChange = (e) => {
@@ -27,6 +31,8 @@ const SearchForm = ({ onSubmit }) => {
       email: "",
       phoneNumber: "",
       city: "",
+      program: "",
+      instructionGroup: "",
     });
   };
 
@@ -105,9 +111,59 @@ const SearchForm = ({ onSubmit }) => {
           >
             Alege oraș
           </option>
-          {cities.map((city, index) => (
+          {location.map((city, index) => (
             <option key={index} value={city} style={optionStyle}>
               {city}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div style={inputGroupStyle}>
+        <label style={labelStyle}>Tipul de program</label>
+        <select
+          name="program"
+          value={formValues.program}
+          onChange={handleChange}
+          style={{
+            ...inputStyle,
+            color: `${formValues.program === "" ? "#757575" : "#212121"}`,
+          }}
+        >
+          <option
+            value=""
+            style={{ ...optionStyle, color: "#ccc", fontWeight: "300" }}
+            disabled
+          >
+            Alege program
+          </option>
+          {program.map((program, index) => (
+            <option key={index} value={program} style={optionStyle}>
+              {program}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div style={inputGroupStyle}>
+        <label style={labelStyle}>Grupa de instruire</label>
+        <select
+          name="instructionGroup"
+          value={formValues.instructionGroup}
+          onChange={handleChange}
+          style={{
+            ...inputStyle,
+            color: `${formValues.instructionGroup === "" ? "#757575" : "#212121"}`,
+          }}
+        >
+          <option
+            value=""
+            style={{ ...optionStyle, color: "#ccc", fontWeight: "300" }}
+            disabled
+          >
+            Alege grupa de instruire
+          </option>
+          {instruction_group.map((group, index) => (
+            <option key={index} value={group} style={optionStyle}>
+              {group}
             </option>
           ))}
         </select>

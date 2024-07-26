@@ -17,8 +17,10 @@ const Main = () => {
       const response = await axios.post('http://127.0.0.1:5000/search', formValues);
       console.log("Search Result:", response.data); // Log the result
 
-      // Normalize the response to always be an array
-      const normalizedResult = Array.isArray(response.data) ? response.data : [response.data];
+      let normalizedResult = response.data;
+      if (!Array.isArray(normalizedResult)) {
+        normalizedResult = [normalizedResult];
+      }
 
       setSearchResult(normalizedResult);
       setNoResults(normalizedResult.length === 0);

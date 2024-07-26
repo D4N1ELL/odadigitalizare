@@ -1,6 +1,6 @@
 import sqlite3
 
-# Define the path to a single database
+# Database path 
 db_path = '/home/liviu/ODA/database/main.db'
 
 # Function to create tables in the single database
@@ -103,10 +103,8 @@ CREATE TABLE IF NOT EXISTS notice (
 );
 """
 
-# Connect to the single database
 conn = sqlite3.connect(db_path)
 
-# Create the tables in the single database
 create_tables(conn, personal_data_sql)
 create_tables(conn, date_sql)
 create_tables(conn, location_sql)
