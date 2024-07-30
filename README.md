@@ -11,7 +11,7 @@ change file paths in db.py, main.py and insert_data.py
 run main.py
 
 
-change to foint folder cd front
+change to front folder cd front
 
 npm start
 
