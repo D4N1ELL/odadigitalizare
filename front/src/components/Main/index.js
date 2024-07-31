@@ -3,6 +3,7 @@ import SearchForm from "../SearchForm";
 import * as S from "./styles";
 import PersonDetails from "../PersonDetails";
 import axios from "axios";
+import ExcelExportButton from "../ExcelExportButton";
 
 const Main = () => {
   const [searchResult, setSearchResult] = useState([]);
@@ -13,7 +14,7 @@ const Main = () => {
 
     try {
       const response = await axios.post('http://127.0.0.1:5000/search', formValues);
-      console.log("Search Result:", response.data); // Log the result
+      console.log("Search Result:", response.data);
 
       // Normalize the response to always be an array
       const normalizedResult = Array.isArray(response.data) ? response.data : [response.data];
@@ -46,6 +47,8 @@ const Main = () => {
               {searchResult.map((person, index) => (
                 <PersonDetails key={index} person={person} />
               ))}
+              {/* Render ExcelExportButton only once */}
+              <ExcelExportButton data={searchResult} /> {/* Pass the searchResult to the ExcelExportButton */}
             </div>
           )}
         </S.Results>

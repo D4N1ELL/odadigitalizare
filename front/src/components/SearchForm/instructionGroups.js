@@ -1,7 +1,4 @@
 export const instruction_group = [
-    "GR 2 - 0 ZILE",
-    "GR 8 - 0 ZILE",
-    "GR 13 - 0 ZILE",
     "GR 15 - 1 ZI",
     "GR 12 - 2 ZILE",
     "GR 9 - 1 ZI",
@@ -23,4 +20,7 @@ export const instruction_group = [
     "GR 31 - 1 ZI",
     "GR 32 - 0 ZILE",
     "GR 33 - 2 ZILE",
+    "GR 2 - 0 ZILE",
+    "GR 8 - 0 ZILE",
+    "GR 13 - 0 ZILE",
 ];

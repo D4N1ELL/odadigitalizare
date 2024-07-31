@@ -1,5 +1,3 @@
-#All extracts of data
-
 def get_additional_data(file_path, table, field, conn, cursor):
     query = f"SELECT {field}_name FROM {table}"
     cursor.execute(query)
@@ -37,22 +35,28 @@ def get_personal_data(cursor, query, params):
 
     result = {
         "user_data": {
+            "id_user": user_id,
             "username": user_data[1],
             "idnp": user_data[2],
             "bday": user_data[3],
             "age": user_data[4],
             "phone_number": user_data[5],
             "email": user_data[6],
-            "location": user_data[7],
-            "program": user_data[8],
-            "operator": user_data[9],
-            "confirmation_date": user_data[10],
-            "comment": user_data[11],
-            "status": user_data[12],
-            "certificate": user_data[13],
-            "finance": user_data[14],
-            "final_status": user_data[15],
-            "exclusion": user_data[16],
+            "id_loc": user_data[7],
+            "loc_name": user_data[8],
+            "id_program": user_data[9],
+            "program_name": user_data[10],
+            "id_operator": user_data[11],
+            "operator": user_data[12],
+            "confirmation_date": user_data[13],
+            "comment": user_data[14],
+            "id_status": user_data[15],
+            "status": user_data[16],
+            "certificate": user_data[17],
+            "finance": user_data[18],
+            "id_final_status": user_data[19],
+            "final_status": user_data[20],
+            "exclusion": user_data[21]
         },
         "application_dates": application_dates,
         "instruction_groups": instruction_groups,
@@ -66,8 +70,9 @@ def get_personal_data_by_name(conn, username):
     query = """
     SELECT 
         pd.id_user, pd.username, pd.idnp, pd.bday, pd.age, pd.phone_number, pd.email, 
-        l.loc_name, p.program_name, o.operator, pd.confirmation_date, pd.comment, 
-        s.status, pd.certificate, pd.finance, fs.final_status, pd.exclusion
+        pd.id_loc, l.loc_name, pd.id_program, p.program_name, pd.id_operator, o.operator, 
+        pd.confirmation_date, pd.comment, pd.id_status, s.status, pd.certificate, 
+        pd.finance, pd.id_fstatus, fs.final_status, pd.exclusion
     FROM 
         personal_data pd
     LEFT JOIN 
@@ -90,8 +95,9 @@ def get_personal_data_by_idnp(conn, idnp):
     query = """
     SELECT 
         pd.id_user, pd.username, pd.idnp, pd.bday, pd.age, pd.phone_number, pd.email, 
-        l.loc_name, p.program_name, o.operator, pd.confirmation_date, pd.comment, 
-        s.status, pd.certificate, pd.finance, fs.final_status, pd.exclusion
+        pd.id_loc, l.loc_name, pd.id_program, p.program_name, pd.id_operator, o.operator, 
+        pd.confirmation_date, pd.comment, pd.id_status, s.status, pd.certificate, 
+        pd.finance, pd.id_fstatus, fs.final_status, pd.exclusion
     FROM 
         personal_data pd
     LEFT JOIN 
@@ -114,8 +120,9 @@ def get_personal_data_by_mail(conn, email):
     query = """
     SELECT 
         pd.id_user, pd.username, pd.idnp, pd.bday, pd.age, pd.phone_number, pd.email, 
-        l.loc_name, p.program_name, o.operator, pd.confirmation_date, pd.comment, 
-        s.status, pd.certificate, pd.finance, fs.final_status, pd.exclusion
+        pd.id_loc, l.loc_name, pd.id_program, p.program_name, pd.id_operator, o.operator, 
+        pd.confirmation_date, pd.comment, pd.id_status, s.status, pd.certificate, 
+        pd.finance, pd.id_fstatus, fs.final_status, pd.exclusion
     FROM 
         personal_data pd
     LEFT JOIN 
@@ -138,8 +145,9 @@ def get_personal_data_by_phone(conn, phone_number):
     query = """
     SELECT 
         pd.id_user, pd.username, pd.idnp, pd.bday, pd.age, pd.phone_number, pd.email, 
-        l.loc_name, p.program_name, o.operator, pd.confirmation_date, pd.comment, 
-        s.status, pd.certificate, pd.finance, fs.final_status, pd.exclusion
+        pd.id_loc, l.loc_name, pd.id_program, p.program_name, pd.id_operator, o.operator, 
+        pd.confirmation_date, pd.comment, pd.id_status, s.status, pd.certificate, 
+        pd.finance, pd.id_fstatus, fs.final_status, pd.exclusion
     FROM 
         personal_data pd
     LEFT JOIN 
@@ -159,11 +167,12 @@ def get_personal_data_by_phone(conn, phone_number):
 
 def get_personal_data_by_city(conn, city):
     cursor = conn.cursor()
-    query = """
+    personal_data_query = """
     SELECT 
         pd.id_user, pd.username, pd.idnp, pd.bday, pd.age, pd.phone_number, pd.email, 
-        l.loc_name, p.program_name, o.operator, pd.confirmation_date, pd.comment, 
-        s.status, pd.certificate, pd.finance, fs.final_status, pd.exclusion
+        pd.id_loc, l.loc_name, pd.id_program, p.program_name, pd.id_operator, o.operator, 
+        pd.confirmation_date, pd.comment, pd.id_status, s.status, pd.certificate, 
+        pd.finance, pd.id_fstatus, fs.final_status, pd.exclusion
     FROM 
         personal_data pd
     LEFT JOIN 
@@ -179,40 +188,69 @@ def get_personal_data_by_city(conn, city):
     WHERE 
         l.loc_name = ?
     """
-    cursor.execute(query, (city,))
+    
+    cursor.execute(personal_data_query, (city,))
     rows = cursor.fetchall()
     
     results = []
     for row in rows:
         user_data = {
+            "id_user": row[0],
             "username": row[1],
             "idnp": row[2],
             "bday": row[3],
             "age": row[4],
             "phone_number": row[5],
             "email": row[6],
-            "location": row[7],
-            "program": row[8],
-            "operator": row[9],
-            "confirmation_date": row[10],
-            "comment": row[11],
-            "status": row[12],
-            "certificate": row[13],
-            "finance": row[14],
-            "final_status": row[15],
-            "exclusion": row[16],
+            "id_loc": row[7],
+            "loc_name": row[8],
+            "id_program": row[9],
+            "program_name": row[10],
+            "id_operator": row[11],
+            "operator": row[12],
+            "confirmation_date": row[13],
+            "comment": row[14],
+            "id_status": row[15],
+            "status": row[16],
+            "certificate": row[17],
+            "finance": row[18],
+            "id_final_status": row[19],
+            "final_status": row[20],
+            "exclusion": row[21]
         }
-        results.append(user_data)
+        
+        query_dates = "SELECT application_date FROM date WHERE id_user = ?"
+        cursor.execute(query_dates, (user_data["id_user"],))
+        application_dates = [row[0] for row in cursor.fetchall()]
+        
+        query_groups = "SELECT group_name FROM instruction_group WHERE id_user = ?"
+        cursor.execute(query_groups, (user_data["id_user"],))
+        instruction_groups = [row[0] for row in cursor.fetchall()]
+        
+        query_notices = """
+        SELECT phone_call, email_call, sms_call, viber_call, response 
+        FROM notice WHERE id_user = ?
+        """
+        cursor.execute(query_notices, (user_data["id_user"],))
+        notices = cursor.fetchall()
+        
+        results.append({
+            "user_data": user_data,
+            "application_dates": application_dates,
+            "instruction_groups": instruction_groups,
+            "notices": notices
+        })
     
     return results
 
 def get_personal_data_by_program(conn, program):
     cursor = conn.cursor()
-    query = """
+    personal_data_query = """
     SELECT 
         pd.id_user, pd.username, pd.idnp, pd.bday, pd.age, pd.phone_number, pd.email, 
-        l.loc_name, p.program_name, o.operator, pd.confirmation_date, pd.comment, 
-        s.status, pd.certificate, pd.finance, fs.final_status, pd.exclusion
+        pd.id_loc, l.loc_name, pd.id_program, p.program_name, pd.id_operator, o.operator, 
+        pd.confirmation_date, pd.comment, pd.id_status, s.status, pd.certificate, 
+        pd.finance, pd.id_fstatus, fs.final_status, pd.exclusion
     FROM 
         personal_data pd
     LEFT JOIN 
@@ -228,40 +266,69 @@ def get_personal_data_by_program(conn, program):
     WHERE 
         p.program_name = ?
     """
-    cursor.execute(query, (program,))
+    
+    cursor.execute(personal_data_query, (program,))
     rows = cursor.fetchall()
     
     results = []
     for row in rows:
         user_data = {
+            "id_user": row[0],
             "username": row[1],
             "idnp": row[2],
             "bday": row[3],
             "age": row[4],
             "phone_number": row[5],
             "email": row[6],
-            "location": row[7],
-            "program": row[8],
-            "operator": row[9],
-            "confirmation_date": row[10],
-            "comment": row[11],
-            "status": row[12],
-            "certificate": row[13],
-            "finance": row[14],
-            "final_status": row[15],
-            "exclusion": row[16],
+            "id_loc": row[7],
+            "loc_name": row[8],
+            "id_program": row[9],
+            "program_name": row[10],
+            "id_operator": row[11],
+            "operator": row[12],
+            "confirmation_date": row[13],
+            "comment": row[14],
+            "id_status": row[15],
+            "status": row[16],
+            "certificate": row[17],
+            "finance": row[18],
+            "id_final_status": row[19],
+            "final_status": row[20],
+            "exclusion": row[21]
         }
-        results.append(user_data)
+        
+        query_dates = "SELECT application_date FROM date WHERE id_user = ?"
+        cursor.execute(query_dates, (user_data["id_user"],))
+        application_dates = [row[0] for row in cursor.fetchall()]
+        
+        query_groups = "SELECT group_name FROM instruction_group WHERE id_user = ?"
+        cursor.execute(query_groups, (user_data["id_user"],))
+        instruction_groups = [row[0] for row in cursor.fetchall()]
+        
+        query_notices = """
+        SELECT phone_call, email_call, sms_call, viber_call, response 
+        FROM notice WHERE id_user = ?
+        """
+        cursor.execute(query_notices, (user_data["id_user"],))
+        notices = cursor.fetchall()
+        
+        results.append({
+            "user_data": user_data,
+            "application_dates": application_dates,
+            "instruction_groups": instruction_groups,
+            "notices": notices
+        })
     
     return results
 
 def get_personal_data_by_instructionGroup(conn, group):
     cursor = conn.cursor()
-    query = """
+    personal_data_query = """
     SELECT 
         pd.id_user, pd.username, pd.idnp, pd.bday, pd.age, pd.phone_number, pd.email, 
-        l.loc_name, p.program_name, o.operator, pd.confirmation_date, pd.comment, 
-        s.status, pd.certificate, pd.finance, fs.final_status, pd.exclusion
+        pd.id_loc, l.loc_name, pd.id_program, p.program_name, pd.id_operator, o.operator, 
+        pd.confirmation_date, pd.comment, pd.id_status, s.status, pd.certificate, 
+        pd.finance, pd.id_fstatus, fs.final_status, pd.exclusion
     FROM 
         personal_data pd
     LEFT JOIN 
@@ -279,29 +346,56 @@ def get_personal_data_by_instructionGroup(conn, group):
     WHERE 
         ig.group_name = ?
     """
-    cursor.execute(query, (group,))
+    cursor.execute(personal_data_query, (group,))
     rows = cursor.fetchall()
     
     results = []
     for row in rows:
         user_data = {
+            "id_user": row[0],
             "username": row[1],
             "idnp": row[2],
             "bday": row[3],
             "age": row[4],
             "phone_number": row[5],
             "email": row[6],
-            "location": row[7],
-            "program": row[8],
-            "operator": row[9],
-            "confirmation_date": row[10],
-            "comment": row[11],
-            "status": row[12],
-            "certificate": row[13],
-            "finance": row[14],
-            "final_status": row[15],
-            "exclusion": row[16],
+            "id_loc": row[7],
+            "loc_name": row[8],
+            "id_program": row[9],
+            "program_name": row[10],
+            "id_operator": row[11],
+            "operator": row[12],
+            "confirmation_date": row[13],
+            "comment": row[14],
+            "id_status": row[15],
+            "status": row[16],
+            "certificate": row[17],
+            "finance": row[18],
+            "id_final_status": row[19],
+            "final_status": row[20],
+            "exclusion": row[21]
         }
-        results.append(user_data)
+        
+        query_dates = "SELECT application_date FROM date WHERE id_user = ?"
+        cursor.execute(query_dates, (user_data["id_user"],))
+        application_dates = [row[0] for row in cursor.fetchall()]
+        
+        query_groups = "SELECT group_name FROM instruction_group WHERE id_user = ?"
+        cursor.execute(query_groups, (user_data["id_user"],))
+        instruction_groups = [row[0] for row in cursor.fetchall()]
+        
+        query_notices = """
+        SELECT phone_call, email_call, sms_call, viber_call, response 
+        FROM notice WHERE id_user = ?
+        """
+        cursor.execute(query_notices, (user_data["id_user"],))
+        notices = cursor.fetchall()
+        
+        results.append({
+            "user_data": user_data,
+            "application_dates": application_dates,
+            "instruction_groups": instruction_groups,
+            "notices": notices
+        })
     
     return results
